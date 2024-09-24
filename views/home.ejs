@@ -1,48 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Short-URL</title>
+    <title>URL Shortener</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #121212; /* Dark background */
+        color: #e0e0e0; /* Light gray text */
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center content */
+      }
+
+      h1 {
+        font-family: "Montserrat", sans-serif;
+        color: #bb86fc; /* Light purple for header */
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      form {
+        background-color: #1e1e1e; /* Slightly lighter dark for the form */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        max-width: 600px; /* Limit the width of the form */
+        width: 100%; /* Full width for small screens */
+        margin-bottom: 20px; /* Space below the form */
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      input[type="text"] {
+        width: calc(100% - 22px); /* Full width with padding */
+        padding: 10px;
+        border: 1px solid #3a3a3a; /* Dark border */
+        border-radius: 4px;
+        background-color: #282828; /* Dark input background */
+        color: #e0e0e0; /* Light text in input */
+        margin-bottom: 20px; /* Space between input and button */
+      }
+
+      button {
+        background-color: #bb86fc; /* Purple button color */
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        width: 100%; /* Full width button */
+      }
+
+      button:hover {
+        background-color: #9b59b6; /* Darker shade on hover */
+      }
+
+      table {
+        width: 100%; /* Full width for the table */
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #1e1e1e; /* Dark background for the table */
+        border-radius: 8px;
+        overflow: hidden; /* Rounded corners for table */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #3a3a3a; /* Dark border for table rows */
+      }
+
+      th {
+        background-color: #bb86fc; /* Purple background for headers */
+        color: white; /* White text for headers */
+      }
+
+      tr:hover {
+        background-color: #333333; /* Dark gray on hover */
+      }
+
+      a {
+        color: #bb86fc; /* Purple for links */
+        text-decoration: none; /* Remove underline */
+      }
+
+      a:hover {
+        text-decoration: underline; /* Underline on hover for links */
+      }
+    </style>
   </head>
   <body>
-    <h1>URL Shortner</h1>
+    <h1>URL Shortener</h1>
+
     <% if (locals.id) { %>
-    <p>URL Generated: http://localhost:8001/url/<%= id %></p>
+    <p style="text-align: center">
+      URL Generated:
+      <a href="http://localhost:8001/url/<%= id %>"
+        >http://localhost:8001/url/<%= id %></a
+      >
+    </p>
     <% } %>
+
     <div>
       <form method="POST" action="/url">
-        <label>Enter Your Original URL</label>
-        <input type="text" name="url" placeholder="https://example.com" />
+        <label for="url">Enter Your Original URL</label>
+        <input
+          type="text"
+          id="url"
+          name="url"
+          placeholder="https://example.com"
+          required
+        />
         <button type="submit">Generate</button>
       </form>
     </div>
+
     <div>
-      <% if (locals.urls) { %>
-      <table style="border-collapse: collapse">
+      <% if (urls && urls.length > 0) { %>
+      <table>
         <thead>
-          <th style="padding: 10px">Sr.no</th>
-          <th style="padding: 10px">ShortId</th>
-          <th style="padding: 10px">Redicect</th>
-          <th style="padding: 10px">Clicks</th>
+          <tr>
+            <th>Sr. No</th>
+            <th>Short ID</th>
+            <th>Redirect URL</th>
+            <th>Clicks</th>
+          </tr>
         </thead>
         <tbody>
-          <% urls.forEach((url,index) => { %>
+          <% urls.forEach((url, index) => { %>
           <tr>
-            <td style="padding: 5px"><%= index+1 %></td>
-            <td style="padding: 5px"><%= url.shortId %></td>
-            <td style="padding: 5px"><%= url.redirectURL %></td>
-            <td style="padding: 5px"><%= url.VisitHistory.length %></td>
-            <% }) %>
+            <td><%= index + 1 %></td>
+            <td><%= url.shortId %></td>
+            <td><a href="<%= url.redirectURL %>"><%= url.redirectURL %></a></td>
+            <td><%= url.VisitHistory.length %></td>
           </tr>
+          <% }) %>
         </tbody>
       </table>
-
+      <% } else { %>
+      <p style="text-align: center">No URLs found.</p>
       <% } %>
     </div>
   </body>

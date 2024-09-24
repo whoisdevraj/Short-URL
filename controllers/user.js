@@ -1,14 +1,20 @@
 const User = require("../models/users");
 const { v4: uuidv4 } = require("uuid");
 const { setUser } = require("../service/auth");
+
 async function handleUserSignUp(req, res) {
-  const { name, email, password } = req.body;
-  await User.create({
-    name,
-    email,
-    password,
-  });
-  return res.render("login");
+  try {
+    const { name, email, password } = req.body;
+    await User.create({
+      name,
+      email,
+      password,
+    });
+    return res.redirect("/login");
+  } catch (error) {
+    console.error("Error during sign up:", error);
+    return res.status(500).render("signup", { error: "Sign up failed" });
+  }
 }
 
 async function handleUserLogin(req, res) {

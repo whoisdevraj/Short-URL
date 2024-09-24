@@ -12,7 +12,9 @@ const connectToMongoDB = require("./connections");
 const userRoute = require("./routes/user");
 const { restrictToLoggedinUserOnly, checkAuth } = require("./middleware/auth");
 
-connectToMongoDB("mongodb://localhost:27017/ShortURL-DB");
+connectToMongoDB("mongodb://localhost:27017/ShortURL-DB")
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log("MongoDB Error"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,7 +24,7 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
 app.use("/url", restrictToLoggedinUserOnly, urlRoute);
-app.use("/user", userRoute);
+app.use("/", userRoute);
 app.use("/", checkAuth, staticRoute);
 
 app.get("/url/:shortId", async (req, res) => {

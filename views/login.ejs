@@ -1,23 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Login - URL Shortener</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #121212; /* Dark background */
+        color: #e0e0e0; /* Light gray text */
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Full height for vertical centering */
+      }
+
+      h1 {
+        font-family: "Montserrat", sans-serif;
+        color: #bb86fc; /* Light purple for header */
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        font-family: "Montserrat", sans-serif;
+        color: #e0e0e0; /* Light gray for subtitle */
+        margin: 0 0 20px 0; /* No margin on top, space below */
+      }
+
+      form {
+        background-color: #1e1e1e; /* Slightly lighter dark for the form */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        max-width: 400px; /* Limit the width of the form */
+        width: 100%; /* Full width for smaller screens */
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      input[type="text"] {
+        width: calc(100% - 22px); /* Full width with padding */
+        padding: 10px;
+        border: 1px solid #3a3a3a; /* Dark border */
+        border-radius: 4px;
+        background-color: #282828; /* Dark input background */
+        color: #e0e0e0; /* Light text in input */
+        margin-bottom: 20px; /* Space between input and button */
+      }
+
+      button {
+        background-color: #bb86fc; /* Purple button color */
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        width: 100%; /* Full width button */
+        margin-bottom: 10px; /* Space between buttons */
+      }
+
+      button:hover {
+        background-color: #9b59b6; /* Darker shade on hover */
+      }
+
+      a {
+        text-align: center;
+        color: #bb86fc; /* Purple for link */
+        display: block; /* Make link full width */
+        margin-top: 10px; /* Space above link */
+        text-decoration: none; /* Remove underline */
+      }
+
+      a:hover {
+        text-decoration: underline; /* Underline on hover for links */
+      }
+    </style>
   </head>
   <body>
-    <h1>Login</h1>
-    <form method="POST" action="/user/login">
-      <label>Email</label>
-      <input type="text" required name="email" placeholder="example@mail.com" />
-      <label>Password</label>
-      <input type="text" required name="password" placeholder="Password" />
+    <h1>URL Shortener</h1>
+    <h2>Login</h2>
+    <form method="POST" action="/login">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        required
+        id="email"
+        name="email"
+        placeholder="example@mail.com"
+      />
+      <label for="password">Password</label>
+      <input
+        type="text"
+        required
+        id="password"
+        name="password"
+        placeholder="Password"
+      />
       <button type="submit">Login</button>
+      <a href="/signup">
+        <button type="button">Signup</button>
+      </a>
     </form>
   </body>
 </html>
